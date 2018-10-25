@@ -1,6 +1,8 @@
 const spinalCore = require("spinal-core-connectorjs");
 const globalType = typeof window === "undefined" ? global : window;
-import { Utilities } from "../Utilities";
+import {
+  Utilities
+} from "../Utilities";
 
 import TimeSeriesData from "./TimeSeriesData";
 
@@ -17,16 +19,16 @@ class TimeSeries extends globalType.Model {
    *the number of hours during which the data is saved, after that the data is archived
    *a frequency (frequency) of adding data in seconds.
    *
-   * @param {string} [_name="TimeSeries"]
+   * @param {string} [_name=TimeSeries] - TimeSeries name
    * @param {number} [archiveTime=24] - in hours
    * @param {number} [frequency=5] - in second
-   * @param {Lst} [data=new Lst()]
+   * @param {Lst} [data=new Lst()] - timeSeries Data
    * @memberof TimeSeries
    */
   constructor(
     _name = "TimeSeries",
     archiveTime = 24,
-    frequency = 5, // in s
+    frequency = 5,
     data = new Lst(),
     name = "TimeSeries"
   ) {
@@ -47,10 +49,12 @@ class TimeSeries extends globalType.Model {
    *
    *takes as parameter a number (data to save ) and saves an object of type {date: saveDate, value: dataToSave} in timeSeries data
    *
-   * @param {number} value
+   * @param {number} value - Value To Save (mandatory)
    * @memberof TimeSeries
    */
   async addToTimeSeries(value) {
+    if (!value) throw "the parameter value is mandatory in addToTimeSeries Method !"
+
     var timeS = new TimeSeriesData(Date.now(), value);
     this.data.push(timeS);
   }
@@ -67,15 +71,18 @@ class TimeSeries extends globalType.Model {
 
   /**
    *
-   *Takes as parameters two dates (in millisecond or a date string in a valid format, preferably "year-month-day hours-minutes-seconds" for example : 2018-10-25 16:26:30 )
+   *Takes as parameters two dates (in millisecond or a date string in a valid format, preferably "year-month-day hours:minutes:seconds" for example : 2018-10-25 16:26:30 )
    *and returns a Array of all timeSeries between the two dates
    *
-   * @param {Date} argBeginDate
-   * @param {Date} argEndDate
+   * @param {Date} argBeginDate - Must be a date in milisecond or in year-month-day hours:minutes:seconds format 
+   * @param {Date} argEndDate - the last date in milisecond or in year-month-day hours:minutes:seconds format 
    * @returns {Array} Array of all timeSeries between argBeginDate and argEndDate
    * @memberof TimeSeries
    */
   async getTimeSeriesBetweenDates(argBeginDate, argEndDate) {
+
+    if (!argBeginDate || !argEndDate) throw "the parameters argBeginDate and argEndDate are mandatory in getTimeSeriesBetweenDates Method !";
+
     var timeS = [];
     var begin = new Date(argBeginDate).getTime();
     var end = new Date(argEndDate).getTime();
@@ -98,7 +105,7 @@ class TimeSeries extends globalType.Model {
    *It Takes a date as params and return the data corresponding to this date,
    *it returns an empty object if no data is associated with the date
    *
-   * @param {Date} argDate
+   * @param {Date} argDate - Must be a date in milisecond or in year-month-day hours:minutes:seconds format 
    * @returns {Object} returns an object that contains the date and data corresponding to argDate
    *
    * @memberof TimeSeries
@@ -117,7 +124,7 @@ class TimeSeries extends globalType.Model {
    *
    * It takes a date as a params and remove and returns the data corresponding to this date
    *
-   * @param {Date} dateToRemove
+   * @param {Date} dateToRemove - Must be a date in milisecond or in year-month-day hours:minutes:seconds format 
    * @returns {Object|undefined} returns the data corresponding to this date, returns undefined if no data found.
    * @memberof TimeSeries
    */
@@ -148,8 +155,8 @@ class TimeSeries extends globalType.Model {
    * if both dates are given it archives all date between both (they even included)
    * else it archives the date given
    *
-   * @param {Date} beginDate
-   * @param {Date} [endDate=undefined]
+   * @param {Date} beginDate - Must be a date in milisecond or in year-month-day hours:minutes:seconds format 
+   * @param {Date} [endDate=undefined] - Optional, must be a date in milisecond or in year-month-day hours:minutes:seconds format
    * @memberof TimeSeries
    */
   async archiveDate(beginDate, endDate = undefined) {
@@ -159,7 +166,8 @@ class TimeSeries extends globalType.Model {
       var d = await this.getDateValue(beginDate);
       dateToArchive.push(d);
     } else {
-      dateToArchive = await this.getTimeSeriesBetweenDates(beginDate, endDate);
+      dateToArchive = await this.getTimeSeriesBetweenDates(beginDate,
+        endDate);
     }
 
     for (var i = 0; i < dateToArchive.length; i++) {

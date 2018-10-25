@@ -25,9 +25,9 @@ takes as parameter a number (data to save ) and saves an object of type {date: s
 
 **Kind**: instance method of [<code>TimeSeries</code>](#TimeSeries)  
 
-| Param | Type |
-| --- | --- |
-| value | <code>number</code> | 
+| Param | Type | Description |
+| --- | --- | --- |
+| value | <code>number</code> | Value To Save (mandatory) |
 
 <a name="TimeSeries+getTimeSeriesCurrentValue"></a>
 
@@ -37,16 +37,16 @@ takes as parameter a number (data to save ) and saves an object of type {date: s
 <a name="TimeSeries+getTimeSeriesBetweenDates"></a>
 
 ### timeSeries.getTimeSeriesBetweenDates(argBeginDate, argEndDate) ⇒ <code>Array</code>
-Takes as parameters two dates (in millisecond or a date string in a valid format, preferably "year-month-day hours-minutes-seconds" for example : 2018-10-25 16:26:30 )
+Takes as parameters two dates (in millisecond or a date string in a valid format, preferably "year-month-day hours:minutes:seconds" for example : 2018-10-25 16:26:30 )
 and returns a Array of all timeSeries between the two dates
 
 **Kind**: instance method of [<code>TimeSeries</code>](#TimeSeries)  
 **Returns**: <code>Array</code> - Array of all timeSeries between argBeginDate and argEndDate  
 
-| Param | Type |
-| --- | --- |
-| argBeginDate | <code>Date</code> | 
-| argEndDate | <code>Date</code> | 
+| Param | Type | Description |
+| --- | --- | --- |
+| argBeginDate | <code>Date</code> | Must be a date in milisecond or in year-month-day hours:minutes:seconds format |
+| argEndDate | <code>Date</code> | the last date in milisecond or in year-month-day hours:minutes:seconds format |
 
 <a name="TimeSeries+getDateValue"></a>
 
@@ -57,9 +57,9 @@ it returns an empty object if no data is associated with the date
 **Kind**: instance method of [<code>TimeSeries</code>](#TimeSeries)  
 **Returns**: <code>Object</code> - returns an object that contains the date and data corresponding to argDate  
 
-| Param | Type |
-| --- | --- |
-| argDate | <code>Date</code> | 
+| Param | Type | Description |
+| --- | --- | --- |
+| argDate | <code>Date</code> | Must be a date in milisecond or in year-month-day hours:minutes:seconds format |
 
 <a name="TimeSeries+removeDate"></a>
 
@@ -69,9 +69,9 @@ It takes a date as a params and remove and returns the data corresponding to thi
 **Kind**: instance method of [<code>TimeSeries</code>](#TimeSeries)  
 **Returns**: <code>Object</code> \| <code>undefined</code> - returns the data corresponding to this date, returns undefined if no data found.  
 
-| Param | Type |
-| --- | --- |
-| dateToRemove | <code>Date</code> | 
+| Param | Type | Description |
+| --- | --- | --- |
+| dateToRemove | <code>Date</code> | Must be a date in milisecond or in year-month-day hours:minutes:seconds format |
 
 <a name="TimeSeries+archiveDate"></a>
 
@@ -82,10 +82,10 @@ else it archives the date given
 
 **Kind**: instance method of [<code>TimeSeries</code>](#TimeSeries)  
 
-| Param | Type |
-| --- | --- |
-| beginDate | <code>Date</code> | 
-| [endDate] | <code>Date</code> | 
+| Param | Type | Description |
+| --- | --- | --- |
+| beginDate | <code>Date</code> | Must be a date in milisecond or in year-month-day hours:minutes:seconds format |
+| [endDate] | <code>Date</code> | Optional, must be a date in milisecond or in year-month-day hours:minutes:seconds format |
 
 <a name="TimeSeries+getDateArchived"></a>
 
@@ -115,8 +115,8 @@ a frequency (frequency) of adding data in seconds.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| [_name] | <code>string</code> | <code>&quot;\&quot;TimeSeries\&quot;&quot;</code> |  |
+| [_name] | <code>string</code> | <code>&quot;TimeSeries&quot;</code> | TimeSeries name |
 | [archiveTime] | <code>number</code> | <code>24</code> | in hours |
 | [frequency] | <code>number</code> | <code>5</code> | in second |
-| [data] | <code>Lst</code> | <code>new Lst()</code> |  |
+| [data] | <code>Lst</code> | <code>new Lst()</code> | timeSeries Data |
 
