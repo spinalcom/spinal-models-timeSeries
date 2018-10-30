@@ -53,7 +53,7 @@ class TimeSeries extends globalType.Model {
    * @memberof TimeSeries
    */
   async addToTimeSeries(value) {
-    if (!value) throw "the parameter value is mandatory in addToTimeSeries Method !"
+    if (typeof value === "undefined") throw "the parameter value is mandatory in addToTimeSeries Method !"
 
     var timeS = new TimeSeriesData(Date.now(), value);
     this.data.push(timeS);
