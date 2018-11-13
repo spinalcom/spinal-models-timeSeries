@@ -208,7 +208,7 @@ class TimeSeries extends globalType.Model {
       console.log("arhivage!!!");
       end = Date.now();
       await this.archiveDate(begin, end);
-      begin = date.now();
+      begin = Date.now();
     }, secondesPerDay * 1000);
   }
 
