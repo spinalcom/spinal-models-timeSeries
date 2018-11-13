@@ -204,7 +204,7 @@ class TimeSeries extends globalType.Model {
     var end;
     var secondesPerDay = 3600 * this.archiveTime.get();
 
-    setInterval(() => {
+    setInterval(async () => {
       end = Date.now();
       await this.archiveDate(begin, end);
       begin = date.now();
