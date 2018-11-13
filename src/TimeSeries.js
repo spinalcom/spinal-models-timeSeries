@@ -202,12 +202,12 @@ class TimeSeries extends globalType.Model {
   archiveDataPerDay() {
     var begin = Date.now();
     var end;
-    var secondesPerDay = 30 //3600 * this.archiveTime.get();
+    var secondesPerDay = 3600 * this.archiveTime.get();
 
-    setInterval(async () => {
-      console.log("arhivage!!!");
+    setInterval(() => {
       end = Date.now();
       await this.archiveDate(begin, end);
+      begin = date.now();
     }, secondesPerDay * 1000);
   }
 
