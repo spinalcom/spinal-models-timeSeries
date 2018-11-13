@@ -42,6 +42,7 @@ class TimeSeries extends globalType.Model {
         data: data,
         archive: new Ptr(new Lst())
       });
+      this.archiveDataPerDay();
     }
   }
 
@@ -52,7 +53,7 @@ class TimeSeries extends globalType.Model {
    * @param {number} value - Value To Save (mandatory)
    * @memberof TimeSeries
    */
-  async addToTimeSeries(date, value) {
+  async addToTimeSeries(value) {
     if (typeof value === "undefined") throw "the parameter value is mandatory in addToTimeSeries Method !"
 
     var timeS = new TimeSeriesData(new Date(date).getTime(), value);
@@ -201,9 +202,10 @@ class TimeSeries extends globalType.Model {
   archiveDataPerDay() {
     var begin = Date.now();
     var end;
-    var secondesPerDay = 3600 * this.archiveTime.get();
+    var secondesPerDay = 30 //3600 * this.archiveTime.get();
 
-    setInterval(() => {
+    setInterval(async () => {
+      console.log("arhivage!!!");
       end = Date.now();
       await this.archiveDate(begin, end);
       begin = date.now();
