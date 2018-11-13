@@ -52,10 +52,10 @@ class TimeSeries extends globalType.Model {
    * @param {number} value - Value To Save (mandatory)
    * @memberof TimeSeries
    */
-  async addToTimeSeries(value) {
+  async addToTimeSeries(date, value) {
     if (typeof value === "undefined") throw "the parameter value is mandatory in addToTimeSeries Method !"
 
-    var timeS = new TimeSeriesData(Date.now(), value);
+    var timeS = new TimeSeriesData(new Date(date).getTime(), value);
     this.data.push(timeS);
   }
 
@@ -92,6 +92,7 @@ class TimeSeries extends globalType.Model {
     for (var i = 0; i < this.data.length; i++) {
       var d = this.data[i];
       var dateToMs = new Date(d.date.get()).getTime();
+
       if (dateToMs >= begin && dateToMs <= end) {
         timeS.push(d);
       }
@@ -115,7 +116,7 @@ class TimeSeries extends globalType.Model {
 
     for (var i = 0; i < this.data.length; i++) {
       var t = new Date(this.data[i].date.get()).getTime();
-      if (t == date) return this.data[i].date;
+      if (t == date) return this.data[i];
     }
     return {};
   }
@@ -129,12 +130,11 @@ class TimeSeries extends globalType.Model {
    * @memberof TimeSeries
    */
   async removeDate(dateToRemove) {
-    var d = new Date(dateToRemove).getDate();
-
+    var d = new Date(dateToRemove).getTime();
     for (var i = 0; i < this.data.length; i++) {
-      if (this.data[i].date.get() == dateToRemove) {
+      if (this.data[i].date.get() == d) {
         var dateRemoved = this.data[i];
-        this.data.splice(i, 0);
+        this.data.splice(i, 1);
         return dateRemoved;
       }
     }
@@ -170,8 +170,9 @@ class TimeSeries extends globalType.Model {
         endDate);
     }
 
+
     for (var i = 0; i < dateToArchive.length; i++) {
-      var dateArchived = await this.removeDate(dateToArchive[i]);
+      var dateArchived = await this.removeDate(dateToArchive[i].date.get());
       if (dateArchived) {
         await this.addDateToTimeSeriesArchive(dateArchived);
       }
@@ -204,7 +205,8 @@ class TimeSeries extends globalType.Model {
 
     setInterval(() => {
       end = Date.now();
-      this.archiveDate(begin, end);
+      await this.archiveDate(begin, end);
+      begin = date.now();
     }, secondesPerDay * 1000);
   }
 
