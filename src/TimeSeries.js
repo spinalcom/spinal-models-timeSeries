@@ -207,7 +207,7 @@ class TimeSeries extends globalType.Model {
     setInterval(async () => {
       end = Date.now();
       await this.archiveDate(begin, end);
-      begin = date.now();
+      // begin = date.now();
     }, secondesPerDay * 1000);
   }
 
