@@ -56,7 +56,7 @@ class TimeSeries extends globalType.Model {
   async addToTimeSeries(value) {
     if (typeof value === "undefined") throw "the parameter value is mandatory in addToTimeSeries Method !"
 
-    var timeS = new TimeSeriesData(new Date(date).getTime(), value);
+    var timeS = new TimeSeriesData(Date.now(), value);
     this.data.push(timeS);
   }
 
@@ -208,7 +208,6 @@ class TimeSeries extends globalType.Model {
       console.log("arhivage!!!");
       end = Date.now();
       await this.archiveDate(begin, end);
-      begin = Date.now();
     }, secondesPerDay * 1000);
   }
 
