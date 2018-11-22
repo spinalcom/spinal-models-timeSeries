@@ -19,6 +19,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "spinal-models-bim_forge": "git+https://github.com/spinalcom/spinal-models-bim_forge.git"
+    
   }
 }
