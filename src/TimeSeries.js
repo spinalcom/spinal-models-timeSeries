@@ -42,8 +42,8 @@ class TimeSeries extends globalType.Model {
         data: data,
         archive: new Ptr(new Lst())
       });
-      this.archiveDataPerDay();
     }
+    this.archiveDataPerDay();
   }
 
   /**
