@@ -237,16 +237,23 @@ class TimeSeries extends globalType.Model {
    */
   archiveDataPerDay() {
     var _this9 = this;
+    try {
+      var begin = Date.now();
+      var end;
+      var secondesPerDay = 3600 * this.archiveTime.get();
 
-    var begin = Date.now();
-    var end;
-    var secondesPerDay = 3600 * this.archiveTime.get();
+      setInterval(_asyncToGenerator(function* () {
+        end = Date.now();
+        yield _this9.archiveDate(begin, end);
+        // begin = date.now();
+      }), secondesPerDay * 1000);
+    } catch (e) {
+      setInterval(function () {
+        _this9.archiveDataPerDay.call(_this9)
+      }, 500)
 
-    setInterval(_asyncToGenerator(function* () {
-      end = Date.now();
-      yield _this9.archiveDate(begin, end);
-      // begin = date.now();
-    }), secondesPerDay * 1000);
+    
+    }
   }
 
   /**** Cette fonction ne dois pas être utilisée par l'utilisateur */
